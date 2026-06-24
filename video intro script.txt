@@ -1,0 +1,41 @@
+[Open with a calm smile. Direct eye contact. Relaxed shoulders.]
+
+Hi, I'm Malik Md Apu Rahman, a Senior Full-Stack Developer and Technical Lead with over 8 years of experience building scalable software products and interactive applications.
+
+[Speak naturally. Don't rush.]
+
+Most software projects don't fail because of technology. They fail because development slows down, requirements become unclear, and execution breaks under growing complexity.
+
+[Small pause.]
+
+My role is to solve that.
+
+[Confidence increases slightly.]
+
+I help startups, businesses, and product teams build modern web applications, mobile apps, backend systems, and Unity-based interactive experiences that are designed to scale and maintain over time.
+
+[Use subtle hand gestures.]
+
+My core stack includes Node.js for high-performance backends, SvelteKit for modern web applications, Flutter for cross-platform mobile and desktop development, and Unity for games, simulations, and interactive products.
+
+[Lean forward slightly.]
+
+What sets me apart is how I build.
+
+I combine proven software architecture with modern AI-assisted engineering workflows to automate repetitive development tasks and accelerate delivery.
+
+[Slow down here. This is the key message.]
+
+That means I spend less time writing boilerplate code and more time focusing on the things that actually matter: business logic, system design, performance, maintainability, security, and user experience.
+
+[Relax and smile slightly.]
+
+Whether you're launching an MVP, building a commercial product, creating an interactive Unity experience, or scaling an existing platform, I take ownership from planning and architecture through deployment and long-term growth.
+
+[Open posture.]
+
+If you're looking for a technical partner who communicates clearly, moves quickly, and delivers high-quality software, take a look at the projects featured on my profile and send me a message.
+
+I'd be happy to discuss your goals and help identify the fastest path to production.
+
+Thank you for watching, and I look forward to working with you.
