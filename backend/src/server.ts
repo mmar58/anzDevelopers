@@ -10,6 +10,10 @@ import authPlugin from "./plugins/auth";
 import authRoutes from "./routes/auth";
 import projectRoutes from "./routes/projects";
 import uploadRoutes from "./routes/uploads";
+import serviceRoutes from "./routes/services";
+import blogRoutes from "./routes/blogs";
+import leadRoutes from "./routes/leads";
+import profileRoutes from "./routes/profile";
 
 dotenv.config();
 
@@ -44,6 +48,10 @@ fastify.register(authPlugin);
 fastify.register(authRoutes, { prefix: "/api/auth" });
 fastify.register(projectRoutes, { prefix: "/api/projects" });
 fastify.register(uploadRoutes, { prefix: "/api/uploads" });
+fastify.register(serviceRoutes, { prefix: "/api/services" });
+fastify.register(blogRoutes, { prefix: "/api/blogs" });
+fastify.register(leadRoutes, { prefix: "/api/leads" });
+fastify.register(profileRoutes, { prefix: "/api/profile" });
 
 // Health check
 fastify.get("/health", async (request, reply) => {

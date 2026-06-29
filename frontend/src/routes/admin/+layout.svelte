@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { LayoutDashboard, FolderKanban, UserCircle, Settings, LogOut, Menu, X } from '@lucide/svelte';
+  import { LayoutDashboard, FolderKanban, UserCircle, Settings, LogOut, Menu, X, FileText, Briefcase, MessageSquare } from '@lucide/svelte';
   import { page } from '$app/stores';
 
   let { children } = $props();
@@ -8,6 +8,9 @@
   const navigation = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Projects', href: '/admin/projects', icon: FolderKanban },
+    { name: 'Blog', href: '/admin/blog', icon: FileText },
+    { name: 'Services', href: '/admin/services', icon: Briefcase },
+    { name: 'Leads', href: '/admin/leads', icon: MessageSquare },
     { name: 'Profile', href: '/admin/profile', icon: UserCircle },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];
@@ -60,8 +63,8 @@
                 : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-white'
             }`}
           >
-            <svelte:component 
-              this={item.icon} 
+            {@const NavIcon = item.icon}
+            <NavIcon
               class={`mr-3 h-5 w-5 flex-shrink-0 transition-colors ${
                 $page.url.pathname.includes(item.href) ? 'text-indigo-400' : 'text-zinc-500 group-hover:text-zinc-300'
               }`} 

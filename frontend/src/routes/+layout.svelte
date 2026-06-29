@@ -1,9 +1,14 @@
 <script lang="ts">
   import '../app.css';
   import { onMount } from 'svelte';
+  import { page } from '$app/stores';
   import Lenis from 'lenis';
+  import Navbar from '$lib/components/Navbar.svelte';
+  import Footer from '$lib/components/Footer.svelte';
 
   let { children } = $props();
+
+  let isAdmin = $derived($page.url.pathname.startsWith('/admin'));
 
   onMount(() => {
     const lenis = new Lenis({
@@ -33,10 +38,21 @@
 
 <svelte:head>
   <title>AnZ Developers | Malik Md Apu Rahman</title>
+  <meta name="description" content="Senior Backend Engineer & Technical Lead. Building scalable backend systems, SaaS platforms, and real-time applications." />
 </svelte:head>
 
 <div class="relative flex min-h-screen flex-col bg-black text-white">
-  {@render children()}
+  {#if !isAdmin}
+    <Navbar />
+  {/if}
+  
+  <main class="{isAdmin ? '' : 'pt-16'}">
+    {@render children()}
+  </main>
+  
+  {#if !isAdmin}
+    <Footer />
+  {/if}
 </div>
 
 <style>
