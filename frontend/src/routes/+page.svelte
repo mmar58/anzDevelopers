@@ -135,7 +135,11 @@
     { value: "8+", label: "Years Experience" },
     { value: "50+", label: "Projects Delivered" },
     { value: "100%", label: "Client Satisfaction" },
-    { value: "Top Rated", label: "Upwork" },
+    {
+      value: "Top Rated",
+      label: "Upwork",
+      link: "https://www.upwork.com/freelancers/~01592faa28412cc5a0?mp_source=share",
+    },
   ];
 
   const trustedBy = ["Upwork", "Clutch", "fiverr", "Google", "Microsoft"];
@@ -166,10 +170,10 @@
         "Cross-platform mobile apps with Flutter, offline sync, GPS tracking and real-time features.",
     },
     {
-      icon: Users,
-      title: "Technical Leadership",
+      icon: Smartphone,
+      title: "Game Development",
       description:
-        "Architecture planning, team leadership, code reviews, mentoring and project management.",
+        "Game development with Unity, level editor, level sync, multiplayer, interactive experience.",
     },
   ];
 
@@ -346,11 +350,14 @@
             <div class="text-2xl font-bold text-white sm:text-3xl">
               {stat.value}
             </div>
-            <div
-              class="mt-1 text-xs font-medium uppercase tracking-wider text-zinc-500"
+            <a
+              href={stat.link}
+              // target="_blank"
+              // rel="noopener noreferrer"
+              class="mt-1 text-xs font-medium uppercase tracking-wider text-zinc-500 hover:text-indigo-500 transition-colors"
             >
               {stat.label}
-            </div>
+            </a>
           </div>
         {/each}
       </div>
@@ -358,7 +365,7 @@
   </div>
 
   <!-- ═══════════════════════ TRUSTED BY ═══════════════════════ -->
-  <section bind:this={trustedSection} class="py-16 border-b border-zinc-800/30">
+  <!-- <section bind:this={trustedSection} class="py-16 border-b border-zinc-800/30">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <p
         class="text-center text-xs font-semibold uppercase tracking-[0.2em] text-zinc-500 mb-10"
@@ -378,7 +385,7 @@
         {/each}
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ═══════════════════════ WHAT I DO BEST ═══════════════════════ -->
   <section bind:this={whatIDoSection} class="py-24">
