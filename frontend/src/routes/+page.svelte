@@ -10,6 +10,8 @@
   let whatIDoSection: HTMLElement;
   let caseStudySection: HTMLElement;
 
+  let profilePhotoUrl = $state('');
+
   // Terminal animation
   let terminalLines: string[] = $state([]);
   const fullTerminalContent = [
@@ -28,7 +30,20 @@
 
   let serviceCards: HTMLElement[] = [];
 
-  onMount(() => {
+  onMount(async () => {
+    // Fetch profile photo
+    try {
+      const res = await fetch('http://localhost:3000/api/profile');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.photo_url) {
+          profilePhotoUrl = data.photo_url.startsWith('http')
+            ? data.photo_url
+            : `http://localhost:3000${data.photo_url}`;
+        }
+      }
+    } catch {}
+
     // Hero entrance animation
     const tl = gsap.timeline({ delay: 0.2 });
     
@@ -160,9 +175,24 @@
           </div>
 
           <div class="space-y-4">
-            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
-              Malik Md Apu<br />Rahman
-            </h1>
+            <!-- Name with round profile photo -->
+            <div class="flex items-center gap-4">
+              <div class="relative shrink-0">
+                <div class="h-16 w-16 rounded-full overflow-hidden border-2 border-indigo-500/40 bg-zinc-800 shadow-lg shadow-indigo-900/30 ring-2 ring-zinc-700">
+                  {#if profilePhotoUrl}
+                    <img src={profilePhotoUrl} alt="Malik Md Apu Rahman" class="h-full w-full object-cover" />
+                  {:else}
+                    <div class="h-full w-full flex items-center justify-center bg-gradient-to-br from-indigo-600/40 to-purple-600/30">
+                      <span class="text-lg font-bold text-white">MA</span>
+                    </div>
+                  {/if}
+                </div>
+                <span class="absolute -bottom-0.5 -right-0.5 h-4 w-4 rounded-full border-2 border-black bg-emerald-500"></span>
+              </div>
+              <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                Malik Md Apu<br />Rahman
+              </h1>
+            </div>
             <h2 class="text-xl font-semibold text-indigo-400 sm:text-2xl">
               Senior Backend Engineer & Technical Lead
             </h2>

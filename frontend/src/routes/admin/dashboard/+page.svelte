@@ -33,10 +33,10 @@
   <!-- Stats Grid -->
   <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
     {#each stats as stat}
+      {@const StatIcon = stat.icon}
       <div class="relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 transition-all hover:bg-zinc-800/50">
         <div class="flex items-center justify-between mb-3">
           <div class="rounded-lg bg-zinc-800/50 p-2">
-            {@const StatIcon = stat.icon}
             <StatIcon class="h-4 w-4 text-indigo-400" />
           </div>
           <span class="text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">{stat.change}</span>

@@ -55,6 +55,7 @@
       <!-- Navigation -->
       <nav class="flex-1 space-y-1 px-4 py-6 overflow-y-auto">
         {#each navigation as item}
+          {@const NavIcon = item.icon}
           <a
             href={item.href}
             class={`group flex items-center rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
@@ -63,7 +64,6 @@
                 : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-white'
             }`}
           >
-            {@const NavIcon = item.icon}
             <NavIcon
               class={`mr-3 h-5 w-5 flex-shrink-0 transition-colors ${
                 $page.url.pathname.includes(item.href) ? 'text-indigo-400' : 'text-zinc-500 group-hover:text-zinc-300'

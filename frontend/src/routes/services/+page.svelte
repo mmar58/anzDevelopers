@@ -64,10 +64,10 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {#each services as service}
+          {@const ServiceIcon = service.icon}
           <div class="group relative flex flex-col rounded-xl border border-zinc-800/50 bg-zinc-950/30 p-7 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/20">
             <!-- Icon -->
             <div class="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-zinc-800/40 text-indigo-400 group-hover:bg-indigo-500/10 transition-colors">
-              {@const ServiceIcon = service.icon}
               <ServiceIcon class="h-6 w-6" />
             </div>
 
