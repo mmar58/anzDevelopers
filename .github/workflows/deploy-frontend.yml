@@ -1,0 +1,63 @@
+name: Deploy Svelte Frontend
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'frontend/**'
+#      - 'ecosystem.config.js' # Also trigger if PM2 config changes
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: './frontend/package-lock.json'
+
+      - name: Install & Prepare Svelte
+        run: |
+          npm install
+        working-directory: ./frontend
+
+      - name: Build frontend
+        run: npm run build
+        working-directory: ./frontend
+
+      - name: Zip frontend Bundle
+        # We zip ONLY the frontend folder and ecosystem file
+        run: zip -r frontend-deploy.zip frontend/ -x "*.git*" "*src*" "*docs*" "*tests*" "*node_modules*" "*.md"
+
+      - name: Deploy to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          source: "frontend-deploy.zip"
+          target: "/home/${{ secrets.HOST_USER }}/node/anz-developers/test"
+
+      - name: Restart Backend on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          script: |
+            cd /home/${{ secrets.HOST_USER }}/node/anz-developers/test
+            unzip -o frontend-deploy.zip
+            rm frontend-deploy.zip
+            cd frontend
+            pnpm install --prod
+            cd ../
+            # 1. Delete the parent frontend folder
+            # rm -rf ../frontend
+            # 2. Move the contents of your current frontend folder into the parent frontend folder
+            mv frontend ../
+            # pm2 reload frontend

@@ -1,0 +1,63 @@
+name: Deploy Fastify Backend
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'backend/**'
+#      - 'ecosystem.config.js' # Also trigger if PM2 config changes
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: './backend/package-lock.json'
+
+      - name: Install & Prepare
+        run: |
+          npm install
+        working-directory: ./backend
+
+      - name: Build
+        run: npm run build
+        working-directory: ./backend
+
+      - name: Zip Backend Bundle
+        # We zip ONLY the backend folder and ecosystem file
+        run: zip -r backend-deploy.zip backend/ -x "*.git*" "*src*" "*docs*" "*tests*" "*node_modules*" "*.md"
+
+      - name: Deploy to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          source: "backend-deploy.zip"
+          target: "/home/${{ secrets.HOST_USER }}/node/anz-developers/test"
+
+      - name: Restart Backend on VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          script: |
+            cd /home/${{ secrets.HOST_USER }}/node/anz-developers/test
+            unzip -o backend-deploy.zip
+            rm backend-deploy.zip
+            cd backend
+            pnpm install --prod
+            cd ../
+            # 1. Delete the parent backend folder
+            # rm -rf ../backend
+            # 2. Move the contents of your current backend folder into the parent backend folder
+            mv backend ../
+            # pm2 reload backend
