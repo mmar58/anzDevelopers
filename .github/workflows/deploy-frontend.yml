@@ -41,7 +41,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           password: ${{ secrets.HOST_PASSWORD }}
           source: "frontend-deploy.zip"
-          target: "/home/${{ secrets.HOST_USER }}/node/anz-developers/test"
+          target: "/${{ secrets.HOST_USER }}/node/anz-developers/test"
 
       - name: Restart Backend on VPS
         uses: appleboy/ssh-action@v1.0.3
@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.HOST_USER }}
           password: ${{ secrets.HOST_PASSWORD }}
           script: |
-            cd /home/${{ secrets.HOST_USER }}/node/anz-developers/test
+            cd /${{ secrets.HOST_USER }}/node/anz-developers/test
             unzip -o frontend-deploy.zip
             rm frontend-deploy.zip
             cd frontend
