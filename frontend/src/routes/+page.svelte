@@ -67,14 +67,14 @@
     tl.fromTo(
       heroContent,
       { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out", clearProps: "transform" },
     );
 
     if (terminalEl) {
       tl.fromTo(
         terminalEl,
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "transform" },
         "-=0.6",
       );
     }
@@ -83,7 +83,7 @@
       tl.fromTo(
         statsBar,
         { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", clearProps: "transform" },
         "-=0.4",
       );
     }
@@ -110,6 +110,7 @@
               duration: 0.8,
               ease: "power3.out",
               delay: 0.1,
+              clearProps: "transform",
             });
             observer.unobserve(entry.target);
           }
@@ -223,7 +224,7 @@
     >
       <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <!-- Left: Content -->
-        <div bind:this={heroContent} class="space-y-8">
+        <div bind:this={heroContent} class="space-y-8" style="opacity: 0; transform: translateY(40px);">
           <div class="space-y-2">
             <span
               class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-indigo-400"
@@ -300,7 +301,7 @@
         </div>
 
         <!-- Right: Terminal Animation -->
-        <div bind:this={terminalEl} class="hidden lg:block">
+        <div bind:this={terminalEl} class="hidden lg:block" style="opacity: 0; transform: translateY(40px);">
           <div
             class="rounded-xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-xl shadow-2xl shadow-black/50 overflow-hidden"
           >
@@ -344,6 +345,7 @@
   <div
     bind:this={statsBar}
     class="border-y border-zinc-800/50 bg-zinc-950/50 backdrop-blur-sm"
+    style="opacity: 0; transform: translateY(30px);"
   >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 gap-6 py-8 sm:grid-cols-4">
@@ -390,7 +392,7 @@
   </section> -->
 
   <!-- ═══════════════════════ WHAT I DO BEST ═══════════════════════ -->
-  <section bind:this={whatIDoSection} class="py-24">
+  <section bind:this={whatIDoSection} class="py-24" style="opacity: 0; transform: translateY(50px);">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-white sm:text-4xl">
@@ -407,6 +409,7 @@
           <div
             bind:this={serviceCards[i]}
             class="group relative rounded-xl border border-zinc-800/50 bg-zinc-950/30 p-6 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/30 hover:-translate-y-1"
+            style="opacity: 0; transform: translateY(50px);"
           >
             <div
               class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800/50 text-indigo-400 group-hover:bg-indigo-500/10 transition-colors"
@@ -427,6 +430,7 @@
   <section
     bind:this={caseStudySection}
     class="py-24 border-t border-zinc-800/30"
+    style="opacity: 0; transform: translateY(50px);"
   >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-8">
