@@ -17,6 +17,7 @@
     BrainCircuit,
     Globe,
   } from "@lucide/svelte";
+  import FamsTrack_landing from "$lib/assets/projects/famstrack_landing.png";
 
   let heroContent: HTMLElement;
   let terminalEl: HTMLElement;
@@ -189,12 +190,12 @@
 
 <svelte:head>
   <title
-    >AnZ Developers | Malik Md Apu Rahman — Senior Backend Engineer & Technical
-    Lead</title
+    >AnZ Developers | Malik Md Apu Rahman — Senior Full-Stack Developer &
+    Technical Lead</title
   >
   <meta
     name="description"
-    content="Founder-led software engineering platform. Building scalable backend systems, SaaS platforms, real-time applications and modern software products."
+    content="Founder-led software engineering platform. Building scalable backend systems, SaaS platforms, real-time applications, interactive experiences and modern software products."
   />
 </svelte:head>
 
@@ -439,7 +440,7 @@
         <!-- Left: Content -->
         <div class="space-y-6">
           <h2 class="text-3xl font-bold text-white sm:text-4xl leading-tight">
-            Enterprise Workforce<br />Management Platform
+            FamsTrack (Workforce<br />Management Platform)
           </h2>
           <p class="text-zinc-400 leading-relaxed">
             A complete workforce management solution with real-time tracking,
@@ -489,23 +490,17 @@
             <div
               class="aspect-video rounded-lg bg-gradient-to-br from-zinc-800/50 to-zinc-900/80 flex items-center justify-center overflow-hidden relative"
             >
-              <!-- Placeholder dashboard mockup -->
-              <div
-                class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:20px_20px]"
-              ></div>
-              <div class="text-center space-y-3">
-                <div
-                  class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 border border-indigo-500/20"
-                >
-                  <Server class="h-8 w-8 text-indigo-400" />
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-white">
-                    Enterprise Platform
-                  </p>
-                  <p class="text-xs text-zinc-500">Dashboard Preview</p>
-                </div>
-              </div>
+              <a
+                class="h-full w-full"
+                href="https://www.famstrack.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><img
+                  class="h-full w-full"
+                  src={FamsTrack_landing}
+                  alt="FamsTrack Landing Page"
+                /></a
+              >
             </div>
             <!-- Bottom tech bar -->
             <div class="mt-3 flex flex-wrap gap-1.5">
