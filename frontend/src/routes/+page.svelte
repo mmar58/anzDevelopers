@@ -173,7 +173,7 @@
       icon: Smartphone,
       title: "Game Development",
       description:
-        "Game development with Unity, level editor, level sync, multiplayer, interactive experience.",
+        "Game development with Unity, level editor, multiplayer, interactive experience.",
     },
   ];
 
@@ -274,7 +274,8 @@
             class="max-w-lg text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
             I help startups and enterprises build scalable backend systems, SaaS
-            platforms, real-time applications and modern software products.
+            platforms, real-time applications, interactive experiences and
+            modern software products.
           </p>
 
           <div class="flex flex-wrap items-center gap-3">
@@ -352,8 +353,8 @@
             </div>
             <a
               href={stat.link}
-              // target="_blank"
-              // rel="noopener noreferrer"
+              target="_blank"
+              rel="noopener noreferrer"
               class="mt-1 text-xs font-medium uppercase tracking-wider text-zinc-500 hover:text-indigo-500 transition-colors"
             >
               {stat.label}
