@@ -12,6 +12,7 @@ const config: { [key: string]: Knex.Config } = {
       database: process.env.DB_NAME || "anz_developers",
       user: process.env.DB_USER || "postgres",
       password: process.env.DB_PASSWORD || "postgres",
+      ...(process.env.DB_SSL_CA ? { ssl: { ca: process.env.DB_SSL_CA } } : {}),
     },
     pool: {
       min: 2,
@@ -27,7 +28,12 @@ const config: { [key: string]: Knex.Config } = {
   },
   production: {
     client: "postgresql",
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DB_SSL_CA
+      ? {
+          connectionString: process.env.DATABASE_URL as string,
+          ssl: { ca: process.env.DB_SSL_CA },
+        }
+      : process.env.DATABASE_URL,
     pool: {
       min: 2,
       max: 10,

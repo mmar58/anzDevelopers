@@ -17,6 +17,7 @@
     BrainCircuit,
     Globe,
   } from "@lucide/svelte";
+  import FamsTrack_landing from "$lib/assets/projects/famstrack_landing.png";
 
   let heroContent: HTMLElement;
   let terminalEl: HTMLElement;
@@ -66,14 +67,14 @@
     tl.fromTo(
       heroContent,
       { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out", clearProps: "transform" },
     );
 
     if (terminalEl) {
       tl.fromTo(
         terminalEl,
         { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" },
+        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "transform" },
         "-=0.6",
       );
     }
@@ -82,7 +83,7 @@
       tl.fromTo(
         statsBar,
         { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", clearProps: "transform" },
         "-=0.4",
       );
     }
@@ -109,6 +110,7 @@
               duration: 0.8,
               ease: "power3.out",
               delay: 0.1,
+              clearProps: "transform",
             });
             observer.unobserve(entry.target);
           }
@@ -173,7 +175,7 @@
       icon: Smartphone,
       title: "Game Development",
       description:
-        "Game development with Unity, level editor, level sync, multiplayer, interactive experience.",
+        "Game development with Unity, level editor, multiplayer, interactive experience.",
     },
   ];
 
@@ -189,12 +191,12 @@
 
 <svelte:head>
   <title
-    >AnZ Developers | Malik Md Apu Rahman — Senior Backend Engineer & Technical
-    Lead</title
+    >AnZ Developers | Malik Md Apu Rahman — Senior Full-Stack Developer &
+    Technical Lead</title
   >
   <meta
     name="description"
-    content="Founder-led software engineering platform. Building scalable backend systems, SaaS platforms, real-time applications and modern software products."
+    content="Founder-led software engineering platform. Building scalable backend systems, SaaS platforms, real-time applications, interactive experiences and modern software products."
   />
 </svelte:head>
 
@@ -222,7 +224,7 @@
     >
       <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <!-- Left: Content -->
-        <div bind:this={heroContent} class="space-y-8">
+        <div bind:this={heroContent} class="space-y-8" style="opacity: 0; transform: translateY(40px);">
           <div class="space-y-2">
             <span
               class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-indigo-400"
@@ -274,7 +276,8 @@
             class="max-w-lg text-base leading-relaxed text-zinc-400 sm:text-lg"
           >
             I help startups and enterprises build scalable backend systems, SaaS
-            platforms, real-time applications and modern software products.
+            platforms, real-time applications, interactive experiences and
+            modern software products.
           </p>
 
           <div class="flex flex-wrap items-center gap-3">
@@ -298,7 +301,7 @@
         </div>
 
         <!-- Right: Terminal Animation -->
-        <div bind:this={terminalEl} class="hidden lg:block">
+        <div bind:this={terminalEl} class="hidden lg:block" style="opacity: 0; transform: translateY(40px);">
           <div
             class="rounded-xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-xl shadow-2xl shadow-black/50 overflow-hidden"
           >
@@ -342,6 +345,7 @@
   <div
     bind:this={statsBar}
     class="border-y border-zinc-800/50 bg-zinc-950/50 backdrop-blur-sm"
+    style="opacity: 0; transform: translateY(30px);"
   >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 gap-6 py-8 sm:grid-cols-4">
@@ -352,8 +356,8 @@
             </div>
             <a
               href={stat.link}
-              // target="_blank"
-              // rel="noopener noreferrer"
+              target="_blank"
+              rel="noopener noreferrer"
               class="mt-1 text-xs font-medium uppercase tracking-wider text-zinc-500 hover:text-indigo-500 transition-colors"
             >
               {stat.label}
@@ -388,7 +392,7 @@
   </section> -->
 
   <!-- ═══════════════════════ WHAT I DO BEST ═══════════════════════ -->
-  <section bind:this={whatIDoSection} class="py-24">
+  <section bind:this={whatIDoSection} class="py-24" style="opacity: 0; transform: translateY(50px);">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-white sm:text-4xl">
@@ -405,6 +409,7 @@
           <div
             bind:this={serviceCards[i]}
             class="group relative rounded-xl border border-zinc-800/50 bg-zinc-950/30 p-6 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/30 hover:-translate-y-1"
+            style="opacity: 0; transform: translateY(50px);"
           >
             <div
               class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800/50 text-indigo-400 group-hover:bg-indigo-500/10 transition-colors"
@@ -425,6 +430,7 @@
   <section
     bind:this={caseStudySection}
     class="py-24 border-t border-zinc-800/30"
+    style="opacity: 0; transform: translateY(50px);"
   >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="mb-8">
@@ -438,7 +444,7 @@
         <!-- Left: Content -->
         <div class="space-y-6">
           <h2 class="text-3xl font-bold text-white sm:text-4xl leading-tight">
-            Enterprise Workforce<br />Management Platform
+            FamsTrack (Workforce<br />Management Platform)
           </h2>
           <p class="text-zinc-400 leading-relaxed">
             A complete workforce management solution with real-time tracking,
@@ -488,23 +494,17 @@
             <div
               class="aspect-video rounded-lg bg-gradient-to-br from-zinc-800/50 to-zinc-900/80 flex items-center justify-center overflow-hidden relative"
             >
-              <!-- Placeholder dashboard mockup -->
-              <div
-                class="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:20px_20px]"
-              ></div>
-              <div class="text-center space-y-3">
-                <div
-                  class="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-500/10 border border-indigo-500/20"
-                >
-                  <Server class="h-8 w-8 text-indigo-400" />
-                </div>
-                <div>
-                  <p class="text-sm font-semibold text-white">
-                    Enterprise Platform
-                  </p>
-                  <p class="text-xs text-zinc-500">Dashboard Preview</p>
-                </div>
-              </div>
+              <a
+                class="h-full w-full"
+                href="https://www.famstrack.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><img
+                  class="h-full w-full"
+                  src={FamsTrack_landing}
+                  alt="FamsTrack Landing Page"
+                /></a
+              >
             </div>
             <!-- Bottom tech bar -->
             <div class="mt-3 flex flex-wrap gap-1.5">
