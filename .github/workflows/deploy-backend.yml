@@ -57,7 +57,7 @@ jobs:
             pnpm install --prod
             cd ../
             # 1. Delete the parent backend folder
-            # rm -rf ../backend
+            rm -rf ../backend
             # 2. Move the contents of your current backend folder into the parent backend folder
             mv backend ../
             # pm2 reload backend
