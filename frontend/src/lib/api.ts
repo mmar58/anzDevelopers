@@ -1,19 +1,26 @@
-let API_BASE = 'http://localhost:3000/api';
+import { browser } from '$app/environment';
+export const environment: "dev" | "prod" = "dev"
+export const backend_ip = environment === "dev" ? "http://192.168.0.2:3000" : "http://117.55.230.69:3000"
+export const API_BASE = (() => {
+  if (!browser) return backend_ip;
 
-if (typeof window !== 'undefined') {
-  const hostname = window.location.hostname;
-  const protocol = window.location.protocol;
-  const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1';
-  const isIp = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(hostname);
+  const { protocol, hostname } = window.location;
 
-  if (isLocalhost) {
-    API_BASE = `${protocol}//${hostname}:3000/api`;
-  } else if (isIp) {
-    API_BASE = `${protocol}//${hostname}:3000/api`;
-  } else {
-    API_BASE = `${protocol}//api.anzdevelopers.com/`;
+  if (protocol === 'https:') {
+    return 'https://api.anzdevelopers.com';
   }
-}
+
+  // http checking for IP or localhost
+  const isLocalhost = /^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/.test(hostname) || hostname === 'localhost';
+  if (isLocalhost) {
+    // if (hostname === 'localhost') {
+    //     return 'http://localhost:3434';
+    // }
+    return backend_ip;
+  }
+
+  return 'http://api.anzdevelopers.com';
+})();
 
 async function fetchApi<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const url = `${API_BASE}${endpoint}`;
