@@ -57,7 +57,7 @@ jobs:
             pnpm install --prod
             cd ../
             # 1. Delete the parent frontend folder
-            # rm -rf ../frontend
+            rm -rf ../frontend
             # 2. Move the contents of your current frontend folder into the parent frontend folder
             mv frontend ../
             # pm2 reload frontend

@@ -17,7 +17,11 @@
     BrainCircuit,
     Globe,
   } from "@lucide/svelte";
+  import { API_BASE } from "$lib/api";
   import FamsTrack_landing from "$lib/assets/projects/famstrack_landing.png";
+  import Terminal from "$lib/components/Terminal.svelte";
+  import StatsBar from "$lib/components/StatsBar.svelte";
+  import ServiceCard from "$lib/components/ServiceCard.svelte";
 
   let heroContent: HTMLElement;
   let terminalEl: HTMLElement;
@@ -28,8 +32,6 @@
 
   let profilePhotoUrl = $state("");
 
-  // Terminal animation
-  let terminalLines: string[] = $state([]);
   const fullTerminalContent = [
     "$ tech_stack --show",
     "",
@@ -45,18 +47,16 @@
     "✓ All systems operational",
   ];
 
-  let serviceCards: HTMLElement[] = [];
-
   onMount(async () => {
     // Fetch profile photo
     try {
-      const res = await fetch("http://localhost:3000/api/profile");
+      const res = await fetch(`${API_BASE}/api/profile`);
       if (res.ok) {
         const data = await res.json();
         if (data.photo_url) {
           profilePhotoUrl = data.photo_url.startsWith("http")
             ? data.photo_url
-            : `http://localhost:3000${data.photo_url}`;
+            : `${API_BASE}/${data.photo_url}`;
         }
       }
     } catch {}
@@ -67,37 +67,14 @@
     tl.fromTo(
       heroContent,
       { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, ease: "power3.out", clearProps: "transform" },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1,
+        ease: "power3.out",
+        clearProps: "transform",
+      },
     );
-
-    if (terminalEl) {
-      tl.fromTo(
-        terminalEl,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", clearProps: "transform" },
-        "-=0.6",
-      );
-    }
-
-    if (statsBar) {
-      tl.fromTo(
-        statsBar,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6, ease: "power3.out", clearProps: "transform" },
-        "-=0.4",
-      );
-    }
-
-    // Terminal typing animation
-    let lineIndex = 0;
-    const typeInterval = setInterval(() => {
-      if (lineIndex < fullTerminalContent.length) {
-        terminalLines = [...terminalLines, fullTerminalContent[lineIndex]];
-        lineIndex++;
-      } else {
-        clearInterval(typeInterval);
-      }
-    }, 300);
 
     // Scroll-triggered animations
     const observer = new IntersectionObserver(
@@ -119,7 +96,7 @@
       { threshold: 0.1 },
     );
 
-    [trustedSection, whatIDoSection, caseStudySection, ...serviceCards].forEach(
+    [trustedSection, whatIDoSection, caseStudySection].forEach(
       (el) => {
         if (el) {
           gsap.set(el, { y: 50, opacity: 0 });
@@ -128,9 +105,6 @@
       },
     );
 
-    return () => {
-      clearInterval(typeInterval);
-    };
   });
 
   const stats = [
@@ -224,7 +198,11 @@
     >
       <div class="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <!-- Left: Content -->
-        <div bind:this={heroContent} class="space-y-8" style="opacity: 0; transform: translateY(40px);">
+        <div
+          bind:this={heroContent}
+          class="space-y-8"
+          style="opacity: 0; transform: translateY(40px);"
+        >
           <div class="space-y-2">
             <span
               class="inline-block text-xs font-bold uppercase tracking-[0.2em] text-indigo-400"
@@ -301,72 +279,18 @@
         </div>
 
         <!-- Right: Terminal Animation -->
-        <div bind:this={terminalEl} class="hidden lg:block" style="opacity: 0; transform: translateY(40px);">
-          <div
-            class="rounded-xl border border-zinc-800 bg-zinc-950/80 backdrop-blur-xl shadow-2xl shadow-black/50 overflow-hidden"
-          >
-            <!-- Terminal header -->
-            <div
-              class="flex items-center gap-2 border-b border-zinc-800/50 px-4 py-3"
-            >
-              <div class="h-3 w-3 rounded-full bg-red-500/80"></div>
-              <div class="h-3 w-3 rounded-full bg-yellow-500/80"></div>
-              <div class="h-3 w-3 rounded-full bg-green-500/80"></div>
-              <span class="ml-3 text-xs text-zinc-500 font-mono"
-                >~/anz-developers</span
-              >
-            </div>
-            <!-- Terminal content -->
-            <div class="p-5 font-mono text-sm min-h-[280px]">
-              {#each terminalLines as line, i}
-                <div
-                  class="leading-7 {line.startsWith('$')
-                    ? 'text-green-400'
-                    : line.startsWith('>')
-                      ? 'text-indigo-400'
-                      : line.startsWith('✓')
-                        ? 'text-emerald-400 font-semibold'
-                        : 'text-zinc-500'}"
-                >
-                  {line}
-                </div>
-              {/each}
-              <span
-                class="inline-block w-2 h-4 bg-indigo-400 animate-pulse ml-0.5"
-              ></span>
-            </div>
-          </div>
-        </div>
+        <Terminal 
+          class="hidden lg:block" 
+          content={fullTerminalContent} 
+          delay={0.6} 
+          maxHeight="280px" 
+        />
       </div>
     </div>
   </section>
 
   <!-- ═══════════════════════ STATS BAR ═══════════════════════ -->
-  <div
-    bind:this={statsBar}
-    class="border-y border-zinc-800/50 bg-zinc-950/50 backdrop-blur-sm"
-    style="opacity: 0; transform: translateY(30px);"
-  >
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-2 gap-6 py-8 sm:grid-cols-4">
-        {#each stats as stat}
-          <div class="text-center">
-            <div class="text-2xl font-bold text-white sm:text-3xl">
-              {stat.value}
-            </div>
-            <a
-              href={stat.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="mt-1 text-xs font-medium uppercase tracking-wider text-zinc-500 hover:text-indigo-500 transition-colors"
-            >
-              {stat.label}
-            </a>
-          </div>
-        {/each}
-      </div>
-    </div>
-  </div>
+  <StatsBar {stats} />
 
   <!-- ═══════════════════════ TRUSTED BY ═══════════════════════ -->
   <!-- <section bind:this={trustedSection} class="py-16 border-b border-zinc-800/30">
@@ -392,7 +316,11 @@
   </section> -->
 
   <!-- ═══════════════════════ WHAT I DO BEST ═══════════════════════ -->
-  <section bind:this={whatIDoSection} class="py-24" style="opacity: 0; transform: translateY(50px);">
+  <section
+    bind:this={whatIDoSection}
+    class="py-24"
+    style="opacity: 0; transform: translateY(50px);"
+  >
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-bold text-white sm:text-4xl">
@@ -404,23 +332,12 @@
       </div>
 
       <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-        {#each services as service, i}
-          {@const Icon = service.icon}
-          <div
-            bind:this={serviceCards[i]}
-            class="group relative rounded-xl border border-zinc-800/50 bg-zinc-950/30 p-6 transition-all duration-300 hover:border-zinc-700 hover:bg-zinc-900/30 hover:-translate-y-1"
-            style="opacity: 0; transform: translateY(50px);"
-          >
-            <div
-              class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-zinc-800/50 text-indigo-400 group-hover:bg-indigo-500/10 transition-colors"
-            >
-              <Icon class="h-5 w-5" />
-            </div>
-            <h3 class="text-sm font-bold text-white mb-2">{service.title}</h3>
-            <p class="text-xs leading-relaxed text-zinc-500">
-              {service.description}
-            </p>
-          </div>
+        {#each services as service}
+          <ServiceCard 
+            title={service.title} 
+            description={service.description} 
+            icon={service.icon} 
+          />
         {/each}
       </div>
     </div>
