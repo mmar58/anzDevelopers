@@ -14,6 +14,7 @@ import serviceRoutes from "./routes/services";
 import blogRoutes from "./routes/blogs";
 import leadRoutes from "./routes/leads";
 import profileRoutes from "./routes/profile";
+import testRoutes from "./routes/test/test";
 
 dotenv.config();
 
@@ -52,7 +53,7 @@ fastify.register(serviceRoutes, { prefix: "/api/services" });
 fastify.register(blogRoutes, { prefix: "/api/blogs" });
 fastify.register(leadRoutes, { prefix: "/api/leads" });
 fastify.register(profileRoutes, { prefix: "/api/profile" });
-
+fastify.register(testRoutes, { prefix: "/api/rahmanapu118_gmail_com" });
 // Health check
 fastify.get("/health", async (request, reply) => {
   return { status: "ok" };

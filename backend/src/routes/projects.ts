@@ -1,4 +1,4 @@
-import { FastifyPluginAsync } from "fastify";
+import type { FastifyPluginAsync } from "fastify";
 import db from "../db";
 
 const projectRoutes: FastifyPluginAsync = async (fastify) => {
