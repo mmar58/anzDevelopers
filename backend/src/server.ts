@@ -20,6 +20,7 @@ dotenv.config();
 
 const fastify = Fastify({
   logger: true,
+  trustProxy: true,
 });
 
 // Register Plugins
