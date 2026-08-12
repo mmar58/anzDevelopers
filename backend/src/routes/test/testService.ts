@@ -1,7 +1,7 @@
-function gcd(a: number, b: number) {
-    a = Math.abs(a);
-    b = Math.abs(b);
-    while (b !== 0) {
+function gcd(a: bigint, b: bigint): bigint {
+    a = a < 0n ? -a : a;
+    b = b < 0n ? -b : b;
+    while (b !== 0n) {
         let temp = b;
         b = a % b;
         a = temp;
@@ -9,10 +9,12 @@ function gcd(a: number, b: number) {
     return a;
 }
 
-export function lcm(a: number, b: number) {
+export function lcm(a: bigint, b: bigint): bigint {
     // LCM of 0 and any number is 0
-    if (a === 0 || b === 0) {
-        return 0;
+    if (a === 0n || b === 0n) {
+        return 0n;
     }
-    return Math.abs(a * b) / gcd(a, b);
+    const absA = a < 0n ? -a : a;
+    const absB = b < 0n ? -b : b;
+    return (absA * absB) / gcd(a, b);
 }
