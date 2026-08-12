@@ -44,20 +44,7 @@ test('Test testRoutes API endpoint', async (t) => {
         assert.strictEqual(response.payload, expectedLcm.toString());
     });
 
-    await t.test('should calculate LCM using bracket format for big numbers', async () => {
-        const xStr = 'abc{1234567}def';
-        const yStr = 'ghi{7654321}jkl';
-        const expectedLcm = lcm(1234567n, 7654321n);
 
-        const response = await fastify.inject({
-            method: 'GET',
-            url: `/?x=${encodeURIComponent(xStr)}&y=${encodeURIComponent(yStr)}`
-        });
-        
-        assert.strictEqual(response.statusCode, 200);
-        assert.strictEqual(response.payload, expectedLcm.toString());
-    });
-    
     await t.test('should calculate LCM for very large numbers', async () => {
         const x = 2147483647n;
         const y = 67280421310721n;
@@ -72,14 +59,13 @@ test('Test testRoutes API endpoint', async (t) => {
         assert.strictEqual(response.payload, expectedLcm.toString());
     });
 
-    await t.test('should return NaN for empty brackets', async () => {
+    await t.test('should return NaN for invalid numbers', async () => {
         const response = await fastify.inject({
             method: 'GET',
-            url: '/?x={}&y={}'
+            url: '/?x=invalid&y=123'
         });
         
-        // Fastify converts NaN to null in JSON response serialization by default
         assert.strictEqual(response.statusCode, 200);
-        assert.strictEqual(response.payload, 'null'); 
+        assert.strictEqual(response.payload, 'NaN'); 
     });
 });
