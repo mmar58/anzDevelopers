@@ -3,6 +3,8 @@ import { lcm } from "./testService";
 const testRoutes: FastifyPluginAsync = async (fastify) => {
     fastify.get("/", async (request, reply) => {
         const { x, y } = request.query as { x: string, y: string }
+        console.group("Test lcm for " + request.ip)
+        console.log("Received x", x, "y", y)
         // return x + " " + y
         if (!x || !y) {
             reply.status(400).send({ message: "Invalid input" });
@@ -15,7 +17,9 @@ const testRoutes: FastifyPluginAsync = async (fastify) => {
                 numberX = parseInt(x)
             }
         } else {
-            numberX = 0
+            console.log("Result", NaN)
+            console.groupEnd()
+            return NaN;
         }
         if (y !== "{}") {
             if (y.includes("{")) {
@@ -24,9 +28,14 @@ const testRoutes: FastifyPluginAsync = async (fastify) => {
                 numberY = parseInt(y)
             }
         } else {
-            numberY = 0
+            console.log("Result", NaN)
+            console.groupEnd()
+            return NaN;
         }
-        return lcm(numberX, numberY);
+        let result = lcm(numberX, numberY)
+        console.log("Result", result)
+        console.groupEnd()
+        return result;
     });
 }
 
