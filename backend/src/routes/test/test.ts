@@ -9,33 +9,20 @@ const testRoutes: FastifyPluginAsync = async (fastify) => {
         if (!x || !y) {
             reply.status(400).send({ message: "Invalid input" });
         }
-        let numberX = 0, numberY = 0;
-        if (x !== "{}") {
-            if (x.includes("{")) {
-                numberX = parseInt(x.split("{")[1].split("}")[0])
-            } else {
-                numberX = parseInt(x)
-            }
-        } else {
-            console.log("Result", NaN)
-            console.groupEnd()
-            return NaN;
+        let numberX = 0n, numberY = 0n;
+
+        if (x.includes("{") || y.includes("{") || x.includes("}") || y.includes("}")) {
+            console.log("Result NaN")
+            return "NaN"
         }
-        if (y !== "{}") {
-            if (y.includes("{")) {
-                numberY = parseInt(y.split("{")[1].split("}")[0])
-            } else {
-                numberY = parseInt(y)
-            }
-        } else {
-            console.log("Result", NaN)
-            console.groupEnd()
-            return NaN;
+        else {
+            numberX = BigInt(x)
+            numberY = BigInt(y)
         }
         let result = lcm(numberX, numberY)
-        console.log("Result", result)
+        console.log("Result", result.toString())
         console.groupEnd()
-        return result;
+        return result.toString();
     });
 }
 

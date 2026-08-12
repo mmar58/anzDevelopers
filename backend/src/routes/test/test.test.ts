@@ -31,8 +31,8 @@ test('Test testRoutes API endpoint', async (t) => {
     });
 
     await t.test('should calculate LCM for big numbers', async () => {
-        const x = 999999;
-        const y = 888888;
+        const x = 999999n;
+        const y = 888888n;
         const expectedLcm = lcm(x, y);
 
         const response = await fastify.inject({
@@ -47,7 +47,7 @@ test('Test testRoutes API endpoint', async (t) => {
     await t.test('should calculate LCM using bracket format for big numbers', async () => {
         const xStr = 'abc{1234567}def';
         const yStr = 'ghi{7654321}jkl';
-        const expectedLcm = lcm(1234567, 7654321);
+        const expectedLcm = lcm(1234567n, 7654321n);
 
         const response = await fastify.inject({
             method: 'GET',
@@ -58,6 +58,20 @@ test('Test testRoutes API endpoint', async (t) => {
         assert.strictEqual(response.payload, expectedLcm.toString());
     });
     
+    await t.test('should calculate LCM for very large numbers', async () => {
+        const x = 2147483647n;
+        const y = 67280421310721n;
+        const expectedLcm = lcm(x, y);
+
+        const response = await fastify.inject({
+            method: 'GET',
+            url: `/?x=${x}&y=${y}`
+        });
+        
+        assert.strictEqual(response.statusCode, 200);
+        assert.strictEqual(response.payload, expectedLcm.toString());
+    });
+
     await t.test('should return NaN for empty brackets', async () => {
         const response = await fastify.inject({
             method: 'GET',
